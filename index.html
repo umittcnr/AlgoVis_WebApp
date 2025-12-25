@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoVis Pro | Ultimate Lab</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            LÜTFEN DERSTE YAPTIKLARIMI EVDE YAPINIZ :) &nbsp;&bull;&nbsp; LÜTFEN DERSTE YAPTIKLARIMI EVDE YAPINIZ :) &nbsp;&bull;&nbsp; LÜTFEN DERSTE YAPTIKLARIMI EVDE YAPINIZ :) &nbsp;&bull;&nbsp; LÜTFEN DERSTE YAPTIKLARIMI EVDE YAPINIZ :)
+        </div>
+    </div>
+
+    <div class="main-layout">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fas fa-layer-group"></i>
+                <div class="brand-text">
+                    <h1>ALGO<span class="neon-text">VIS</span></h1>
+                    <small>ULTIMATE EDITION</small>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">VERİ YAPILANDIRMASI</div>
+                
+                <div class="control-row">
+                    <label>Veri Modu</label>
+                    <div class="toggle-container">
+                        <span id="lbl-sorted" class="toggle-label active">Sıralı</span>
+                        <label class="switch">
+                            <input type="checkbox" id="chk-sorted" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-row stack">
+                    <label>Özel Veri Seti (Opsiyonel)</label>
+                    <input type="text" id="inp-custom-data" class="mono-input text-left" placeholder="Örn: 5, 12, 33, 42...">
+                    <small class="hint">Virgülle ayırarak girin.</small>
+                </div>
+
+                <div class="control-row stack">
+                    <div class="flex-spread">
+                        <label>Boyut (N)</label>
+                        <div class="dual-input">
+                            <span id="disp-size" class="val-tag hidden">20</span>
+                            <input type="number" id="inp-size-num" value="20" min="5" max="50" class="mini-input">
+                        </div>
+                    </div>
+                    <input type="range" id="inp-size" min="5" max="50" value="20">
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">SİMÜLASYON MOTORU</div>
+                
+                <div class="control-row stack">
+                    <div class="flex-spread">
+                        <label>Hız</label>
+                        <span id="disp-speed" class="val-tag">800ms</span>
+                    </div>
+                    <input type="range" id="inp-speed" min="50" max="2000" value="800" class="dir-rtl">
+                </div>
+
+                <div class="control-row stack">
+                    <label>Aranacak Hedef (Target)</label>
+                    <div class="input-group">
+                        <input type="number" id="inp-target" placeholder="?" class="mono-input">
+                        <button id="btn-rand" class="btn-icon" title="Rastgele Seç"><i class="fas fa-dice"></i></button>
+                    </div>
+                </div>
+                
+                <div class="control-row">
+                    <label>Ses Efektleri</label>
+                    <button id="btn-sound" class="btn-icon-small active"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+
+            <div class="action-grid">
+                <button id="btn-gen" class="btn secondary span-2"><i class="fas fa-sync"></i> VERİ OLUŞTUR</button>
+                
+                <button id="btn-run" class="btn primary span-2"><i class="fas fa-play"></i> SİMÜLASYONU BAŞLAT</button>
+                
+                <button id="btn-pause" class="btn warning" disabled><i class="fas fa-pause"></i> DURAKLAT</button>
+                <button id="btn-step" class="btn info" disabled><i class="fas fa-step-forward"></i> ADIM</button>
+            </div>
+
+            <div class="legend-box">
+                <div class="legend-row"><span class="dot l-search"></span> Arama Aralığı</div>
+                <div class="legend-row"><span class="dot l-check"></span> İşlenen / Kontrol</div>
+                <div class="legend-row"><span class="dot l-found"></span> Hedef Bulundu</div>
+                <div class="legend-row"><span class="dot l-elim"></span> Kapsam Dışı</div>
+            </div>
+        </aside>
+
+        <main class="stage">
+            
+            <div class="algo-card" id="card-linear">
+                <div class="card-header">
+                    <div class="header-main">
+                        <h3>Linear Search</h3>
+                        <span class="complexity bad">O(N)</span>
+                    </div>
+                    <div class="metric-display">
+                        <span id="lin-n-calc" class="calc-info">N = 20</span>
+                        <span>Adım: <b id="lin-cur-step">0</b> / <b id="lin-max-steps">20</b></span>
+                    </div>
+                </div>
+                
+                <div class="visual-area">
+                    <div class="bars-wrapper" id="view-linear"></div>
+                    <div class="pointers-wrapper" id="ptr-linear"></div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="pseudocode" id="code-linear">
+                        <div id="ln-1">for (i = 0; i < N; i++)</div>
+                        <div id="ln-2">&nbsp;&nbsp;if (arr[i] == target)</div>
+                        <div id="ln-3">&nbsp;&nbsp;&nbsp;&nbsp;return index; <span class="comment">// Bulundu</span></div>
+                        <div id="ln-4">&nbsp;&nbsp;return -1; <span class="comment">// Bulunamadı</span></div>
+                    </div>
+                    <div class="var-dashboard">
+                        <div class="var-item"><span>i</span><b id="v-lin-i">-</b></div>
+                        <div class="var-item"><span>arr[i]</span><b id="v-lin-val">-</b></div>
+                        <div class="var-item"><span>Target</span><b class="v-target">-</b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algo-card" id="card-binary">
+                <div class="overlay-msg" id="ov-binary">
+                    <i class="fas fa-ban"></i>
+                    <span>VERİ SIRALI DEĞİL</span>
+                    <small>Binary Search çalıştırılamaz.</small>
+                </div>
+
+                <div class="card-header">
+                    <div class="header-main">
+                        <h3>Binary Search</h3>
+                        <span class="complexity good">O(log N)</span>
+                    </div>
+                    <div class="metric-display">
+                        <span id="bin-n-calc" class="calc-info">log₂20 ≈ 5</span>
+                        <span>Adım: <b id="bin-cur-step">0</b> / <b id="bin-max-steps">5</b></span>
+                    </div>
+                </div>
+
+                <div class="visual-area">
+                    <div class="bars-wrapper" id="view-binary"></div>
+                    <div class="pointers-wrapper" id="ptr-binary"></div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="pseudocode" id="code-binary">
+                        <div id="bn-1">while (low <= high)</div>
+                        <div id="bn-2">&nbsp;&nbsp;mid = floor((low + high)/2)</div>
+                        <div id="bn-3">&nbsp;&nbsp;if (arr[mid] == target) return</div>
+                        <div id="bn-4">&nbsp;&nbsp;if (arr[mid] < target) low=m+1</div>
+                        <div id="bn-5">&nbsp;&nbsp;else high=m-1</div>
+                    </div>
+                    <div class="var-dashboard">
+                        <div class="var-item"><span>Low</span><b id="v-bin-l">-</b></div>
+                        <div class="var-item"><span>High</span><b id="v-bin-h">-</b></div>
+                        <div class="var-item"><span>Mid</span><b id="v-bin-m">-</b></div>
+                        <div class="var-item"><span>arr[M]</span><b id="v-bin-val">-</b></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        DEVELOPED By UMİTCANCİNAR
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
